@@ -57,6 +57,16 @@ float DecrementELSmall(float el)
   return Decrement(el, 0.1);
 }
 
+/////////////////////////////////////////////////////////////////////////////
+
+void ClearLine(LiquidCrystal lcd, int row)
+{
+  lcd.setCursor(0, row);
+  lcd.print("                ");
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
 void PrintFloatCont(LiquidCrystal lcd, float f)
 {
      char s[5];
@@ -64,16 +74,9 @@ void PrintFloatCont(LiquidCrystal lcd, float f)
      lcd.print(s);
 }
 
-void PrintFloatAt(LiquidCrystal lcd, int row, int col, float f)
-{
-     lcd.setCursor (col,row);
-     char s[5];
-     dtostrf(f, 2+log(floor(f)), 1, s);
-}
-
-
 void PrintAZ(LiquidCrystal lcd, float az)
 {
+     ClearLine(lcd, 0);
      lcd.setCursor (0,0);
      lcd.print("AZ ");
      PrintFloatCont(lcd, az);
@@ -81,6 +84,7 @@ void PrintAZ(LiquidCrystal lcd, float az)
 
 void PrintAZmove(LiquidCrystal lcd, float old_az, float az)
 {
+     ClearLine(lcd, 0);
      lcd.setCursor (0,0);
      lcd.print("AZ ");
      PrintFloatCont(lcd, old_az);
@@ -90,6 +94,7 @@ void PrintAZmove(LiquidCrystal lcd, float old_az, float az)
 
 void PrintEL(LiquidCrystal lcd, float el)
 {
+     ClearLine(lcd, 1);
      lcd.setCursor (0,1);
      lcd.print("EL ");
      PrintFloatCont(lcd, el);
@@ -97,6 +102,7 @@ void PrintEL(LiquidCrystal lcd, float el)
 
 void PrintELmove(LiquidCrystal lcd, float old_el, float el)
 {
+     ClearLine(lcd, 1);
      lcd.setCursor (0,1);
      lcd.print("EL ");
      PrintFloatCont(lcd, old_el);

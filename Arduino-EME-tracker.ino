@@ -21,9 +21,9 @@ int sw5v = 3; // power pin for the switch
 int sw = 2; // switch pin
 int switchstate = 0;  // variable for reading the switch status
 
-float oldAZ = 0.1;
+float oldAZ = 0.0;
 float currentAZ = 0.0;
-float oldEL = 0.1;
+float oldEL = 0.0;
 float currentEL = 0.0;
 
 int button = BTN_NONE;
@@ -50,6 +50,8 @@ void setup() {
   Serial.begin(9600);
 
   delay(2000);
+
+  DisplayAzEl();
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -66,6 +68,14 @@ float reduce(float x)
  }
  return(x);
 }
+
+/////////////////////////////////////////////////////////////////////////////
+
+void DisplayAzEl()
+{
+   PrintAZ(lcd, currentAZ);
+   PrintEL(lcd, currentEL);
+}
 /////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////
 //
@@ -74,9 +84,6 @@ float reduce(float x)
 void loop() 
 {
    delay(100);
-
-   char ln[16];
-   lcd.home();
 
    button = CheckForButton();
 
@@ -95,6 +102,7 @@ void loop()
       currentAZ = Increment(currentAZ, 0.1);
       break;
     default:
+      return; // do nothing in this case
       break;
    }
 
@@ -121,11 +129,7 @@ void loop()
    if (need_pause)
    {
    delay(250);
-   lcd.clear();
-   lcd.home ();                   // go home
-   PrintAZ(lcd, currentAZ);
-   PrintEL(lcd, currentEL);
    }
 
-
+    DisplayAzEl();
 }
